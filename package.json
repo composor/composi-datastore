@@ -1,10 +1,14 @@
 {
   "name": "composi-datastore",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A state manager and custom class component for Composi.",
   "main": "index.js",
+  "files": [
+    "src",
+    "index.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage --no-cache"
   },
   "keywords": [
     "composi",
@@ -14,7 +18,24 @@
   ],
   "author": "Robert Biggs",
   "license": "MIT",
+  "babel": {
+    "presets": "env"
+  },
   "dependencies": {
-    "composi": "^3.0.0"
+    "composi": "latest"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>.*(node_modules)(?!(composi.*?\\.js$))"
+    ]
+  },
+  "devDependencies": {
+    "babel-env": "2.4.1",
+    "jest": "^23.5.0",
+    "rollup": "^0.62.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-resolve": "0.0.1-predev.1"
   }
 }

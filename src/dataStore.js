@@ -1,5 +1,4 @@
-import { uuid } from './uuid'
-import { EMPTY_ARRAY, EMPTY_OBJECT, merge, isObject } from 'composi/lib/utils'
+import { EMPTY_OBJECT, merge, isObject, uuid } from './utils'
 import { Observer } from './observer'
 const dataStore = uuid()
 
@@ -29,7 +28,7 @@ export class DataStore {
    */
   set state(data) {
     this[dataStore] = data
-    this.dispatch('stateChange', this.state)
+    this.dispatch('dataStoreStateChanged', this.state)
   }
 
   /**
@@ -67,20 +66,12 @@ export class DataStore {
   setState(data) {
     if (typeof data === 'function') {
       let copyOfState
-      if (isObject(this.state)) {
-        copyOfState = merge(EMPTY_OBJECT, this.state)
-      } else if (Array.isArray(this.state)) {
-        copyOfState = EMPTY_ARRAY.concat(EMPTY_ARRAY, this.state)
-      } else {
-        copyOfState = this.state
-      }
+      copyOfState = merge(EMPTY_OBJECT, this.state)
       const newState = data.call(this, copyOfState)
       if (newState) this.state = newState
     } else if (isObject(this.state) && isObject(data)) {
       const newState = merge(this.state, data)
       this.state = newState
-    } else {
-      this.state = data
     }
   }
 }

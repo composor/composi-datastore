@@ -6,6 +6,7 @@
 .Trashes
 npm-debug.log
 node_modules
+coverage
 
 # Editor and IDE configuration
 .vscode/

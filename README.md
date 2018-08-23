@@ -1,6 +1,6 @@
 # Component-DataStore
 
-This contains two classes: DataStore and DataStoreComponent. These enable creating Composi class components using a `dataStore` for state management. When the `dataStore` is modified, it automatically updates the component.
+This contains three classes: DataStore, DataStoreComponent and Observer. These enable creating Composi class components using a `dataStore` for state management. When the `dataStore` is modified, it automatically updates the component.
 
 
 ## Installation
@@ -128,3 +128,54 @@ const list = new List({
 
 list.update(dataStore.state)
 ```
+
+### Default DataStore Event
+`DataStore` uses `dataStoreStateChanged` as the default event in conjunction with `DataStoreComponent`. So DO NOT USE this for your own watchers. It will render your `DataStoreComponent` incapable of update when the dataStore changes.
+
+## Observer 
+
+This is a simple observer class with just two methods: `watch` and `dispatch`. Can't get any simpler than that. To use it, import it into your project:
+
+```javascript
+import { Observer } from 'composi-datastore'
+```
+
+After that you can create a new instance of `Observer`:
+
+```javascript
+const observer = new Observer()
+```
+
+After creating a new observer, you can set up watchers and when appropriate dispatch to them. You tell the observer to watch events and give them a callback to execute when the event happens. Dispatch announces the event and optionally passes some data along with it. Note, you don't need to send data. An watcher can just be waiting for an event to happen.
+
+```javascript
+import { Observer } from 'composi-datastore'
+
+const observer = new Observer()
+
+function callback(data) {
+  console.log(`This is the event: ${data}`)
+}
+
+observer.watch('test', callback)
+
+// Sometime later:
+observer.dispatch('test', 'Sending a message to the observer.')
+```
+
+### Events
+
+The observer stores its events on its `events` property. If we took the `observer` from the above example, we could examine its events like this:
+
+```javascript
+console.log(oberser.events)
+/**
+  returns: {test: [
+  function (t){console.log("This is the event: "+t)}
+]}
+*/
+```
+
+### TODO
+
+Implement Jest tests for `DataStoreComponent`. Since this has a dependency on a Node module (composi), I haven't been able to create a test that works. Seems Jest has problems dealing with ES6 `import/export` with Babel. Have tried all kinds of configs, but Jest fails to import Composi module.
