@@ -1,6 +1,6 @@
 {
   "name": "composi-datastore",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A state manager and custom class component for Composi.",
   "main": "index.js",
   "files": [
